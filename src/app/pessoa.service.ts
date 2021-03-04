@@ -15,5 +15,21 @@ export class PessoaService {
   getListaPessoa():Observable<Pessoa[]>{
     return this.httpClient.get<Pessoa[]>(`${this.baseUrl}`);
   }
+  criarPessoa(pessoa: Pessoa): Observable<any>{
+    return this.httpClient.post(`${this.baseUrl}`, pessoa);
+  }
+
+  getPessoaById(id: number): Observable<Pessoa>{
+    return this.httpClient.get<Pessoa>(`${this.baseUrl}/${id}`);
+  }
+
+  atualizarPessoa(id: number, pessoa: Pessoa): Observable<Object>{
+    return this.httpClient.put(`${this.baseUrl}/${id}`, pessoa);
+  }
+
+  deletarPessoa(id:number):Observable<Object>{
+    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+  }
+
 
 }

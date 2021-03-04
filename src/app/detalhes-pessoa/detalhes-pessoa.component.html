@@ -1,0 +1,24 @@
+
+<div class="container" >
+    <h3 > Detalhes da Pessoa</h3>
+    <div>
+        <div>
+            <label> <b> Id: </b></label> {{pessoa.id}}
+        </div>
+        <div  class="p-mt-5">
+          <label> <b> Nome: </b></label> {{pessoa.nome}}
+        </div>
+        <div>
+          <label> <b> Email: </b></label> {{pessoa.email}}
+        </div>
+        <div>
+          <label> <b> Celular: </b></label> {{pessoa.celular}}
+        </div>
+    </div>
+    <br>
+    <div>
+        <button pButton type="submit" icon="pi pi-refresh" iconPos="left" class="p-button-success"
+                label="Voltar" (click)="voltarMenuPessoa()">
+        </button>
+    </div>
+</div>

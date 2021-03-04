@@ -1,0 +1,41 @@
+<div class="container" style="width: 400px;" >
+
+    <p-toast>
+    </p-toast>
+    <h3 > Adicionar Estado</h3>
+    <br>
+    
+<div class="p-grid p-fluid">
+        <div class="p-col-12 p-md-4" style="width: 400px;">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-flag"></i></span>
+                <input type="text" pInputText placeholder="Nome" id="nome" 
+                        [(ngModel)]="estado.nome" name="nome">         
+            </div>
+        
+             <br>
+        
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-shield"></i></span>
+                <input type="text" pInputText placeholder="Sigla" id="sigla"
+                        [(ngModel)]="estado.sigla" name="sigla">         
+            </div>
+        </div>
+           
+</div>
+  
+<br>
+
+<div style="text-align: center;">
+    <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
+    label="Salvar" (click)="salvarEstado()">
+    </button>
+
+        &nbsp;&nbsp;
+
+    <button pButton type="submit" icon="pi pi-times" iconPos="left" class="p-button-danger"
+    label="Cancelar" (click)="voltarMenuEstado()">
+    </button>
+
+</div>
+</div>

@@ -1,23 +1,46 @@
-<h2> Lista de pessoas</h2>
 
-<p-table [value]="pessoas" [responsive]="true" [paginator]="true" [rows]="20" 
+<div class="container" style="width: 1000px;">
+
+  <p-splitButton label="Selecione a Categoria" [model]="items"></p-splitButton>
+  &nbsp;&nbsp;
+  <button pButton type="button" icon="pi pi-plus" iconPos="left"
+          label="Nova Pessoa" (click)="btnNovaPessoa()" class="p-button-success">
+  </button>
+  
+<br><br><br>
+<p-table  [value]="pessoas" [responsive]="true" [paginator]="true" [rows]="20" 
 [resizableColumns]="true" [scrollable]="true" scrollHeight="300px">
     <ng-template pTemplate="header" header="Custom Header" styleClass="dark-table">
         
         <tr >
-            <th style="width:1%; text-align: left"> Id</th>
-            <th style="width:2%; text-align: left"> Nome</th>
-            <th style="width:3%; text-align: left" > Email</th>
-            <th style="width:3%; text-align: left;"> Celular</th>
+            
+            <th style="width:5%; text-align: center" class="p-pi-save"> Nomes</th>
+    
+            <th style="width:3%; text-align: center;"> Ações</th>
         </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-pessoa>
-      <tr>
-          <td style="width:1%; text-align: left" >{{pessoa.id}}</td>
-          <td style="width:2%; text-align: left" >{{pessoa.nome}}</td>
-          <td style="width:3%; text-align: left" >{{pessoa.email}}</td>
-          <td style="width:3%; text-align: left" >{{pessoa.celular}}</td>
-        
+    <ng-template pTemplate="body" let-pessoa >
+      <tr >
+          
+          <td style="width:5%; text-align: left;" >{{pessoa.nome}}</td>
+         
+          <td style="width:3%; text-align: center;" >
+            <button pButton type="button" icon="pi pi-info" iconPos="left"
+            (click)="detalhesPessoa(pessoa.id)" class="p-button-text  p-button-outlined ">
+            </button>
+
+            <button pButton type="button" icon="pi pi-pencil" iconPos="left"
+               (click)="atualizarPessoa(pessoa.id)" class="p-button-text  p-button-outlined ">
+            </button>
+
+            <button pButton type="button" icon="pi pi-trash" iconPos="left"
+               (click)="excluirPessoa(pessoa.id)" 
+               class="p-button-text p-button-outlined p-button-danger">
+            </button>
+          </td>
+      
       </tr>
+      
     </ng-template>
 </p-table>
+</div>

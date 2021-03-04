@@ -1,0 +1,21 @@
+
+<div class="container" >
+    <h3 > Detalhes do Estado</h3>
+    <div>
+        <div>
+            <label> <b> Id: </b></label> {{estado.id}}
+        </div>
+        <div  class="p-mt-5">
+          <label> <b> Nome: </b></label> {{estado.nome}}
+        </div>
+        <div>
+          <label> <b> Sigla: </b></label> {{estado.sigla}}
+        </div>
+    </div>
+    <br>
+    <div>
+        <button pButton type="submit" icon="pi pi-refresh" iconPos="left" class="p-button-success"
+                label="Voltar" (click)="voltarMenuEstado()">
+        </button>
+    </div>
+</div>
