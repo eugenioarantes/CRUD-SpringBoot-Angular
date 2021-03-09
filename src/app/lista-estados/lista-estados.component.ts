@@ -25,7 +25,7 @@ export class ListaEstadosComponent implements OnInit {
         this.listaPessoas();
     }},
       {label: 'Lista de Cidades', command: () => {
-        this.voltarMenuEstado();
+        this.listaCidades();
     }},
       {label: 'Lista de Estados',command: () => {
         this.voltarMenuEstado();
@@ -33,12 +33,16 @@ export class ListaEstadosComponent implements OnInit {
   ];
   }
 
+
   listaPessoas(){
     this.router.navigate(['cadastro/listapessoas']);
   }
 
   voltarMenuEstado(){
     this.router.navigate(['cadastro/listaestados']);
+  }
+  listaCidades(){
+    this.router.navigate(['cadastro/listacidades']);
   }
 
   private getEstados(){

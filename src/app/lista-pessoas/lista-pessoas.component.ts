@@ -25,13 +25,17 @@ export class ListaPessoasComponent implements OnInit {
         this.voltarMenuPessoa();
     }},
       {label: 'Lista de Cidades', command: () => {
-        this.voltarMenuPessoa();
+        this.listaCidades();
     }},
       {label: 'Lista de Estados',command: () => {
         this.listaEstados();
     }}
   ];
 
+  }
+
+  listaCidades(){
+    this.router.navigate(['cadastro/listacidades']);
   }
 
   listaEstados(){

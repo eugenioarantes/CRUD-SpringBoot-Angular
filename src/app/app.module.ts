@@ -21,6 +21,12 @@ import { ListaEstadosComponent } from './lista-estados/lista-estados.component';
 import { CriarEstadoComponent } from './criar-estado/criar-estado.component';
 import { AtualizarEstadoComponent } from './atualizar-estado/atualizar-estado.component';
 import { DetalhesEstadoComponent } from './detalhes-estado/detalhes-estado.component';
+import { ListaCidadesComponent } from './lista-cidades/lista-cidades.component';
+import { CriarCidadeComponent } from './criar-cidade/criar-cidade.component';
+import { AtualizarCidadeComponent } from './atualizar-cidade/atualizar-cidade.component';
+import { DetalhesCidadeComponent } from './detalhes-cidade/detalhes-cidade.component';
+import {DropdownModule} from 'primeng/dropdown';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +38,11 @@ import { DetalhesEstadoComponent } from './detalhes-estado/detalhes-estado.compo
     ListaEstadosComponent,
     CriarEstadoComponent,
     AtualizarEstadoComponent,
-    DetalhesEstadoComponent
+    DetalhesEstadoComponent,
+    ListaCidadesComponent,
+    CriarCidadeComponent,
+    AtualizarCidadeComponent,
+    DetalhesCidadeComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +55,8 @@ import { DetalhesEstadoComponent } from './detalhes-estado/detalhes-estado.compo
     InputTextModule,
     FormsModule,
     SplitButtonModule,
-    ToastModule
+    ToastModule,
+    DropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
