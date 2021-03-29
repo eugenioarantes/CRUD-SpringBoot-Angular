@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+   <changeSet id="1" author="eugenio" >
+        <createTable tableName="pessoas">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="varchar(50)"/>
+            <column name="email" type="varchar(50)"/>
+            <column name="celular" type="varchar(20)"/>
+        </createTable>
+        <addUniqueConstraint
+        	columnNames="email"
+        	constraintName="unique_email"
+     	    tableName="pessoas"
+        />
+        <addUniqueConstraint
+        	columnNames="celular"
+        	constraintName="unique_celular"
+     	    tableName="pessoas"
+        />
+    </changeSet>
+    
+    
+    <changeSet id="2" author="eugenio">
+        <createTable tableName="estados">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="varchar(20)"/>
+            <column name="sigla" type="varchar(2)"/>
+        </createTable>
+        <addUniqueConstraint
+        	columnNames="nome"
+        	constraintName="unique_nome"
+     	    tableName="estados"
+        />
+        <addUniqueConstraint
+        	columnNames="sigla"
+        	constraintName="unique_sigla"
+     	    tableName="estados"
+        />
+    </changeSet>
+    
+    <changeSet id="3" author="eugenio">
+        <createTable tableName="cidades">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nome" type="varchar(20)"/>
+            <column name="estado" type="bigint">
+            <constraints foreignKeyName="estado" references="estados(id)" nullable="false"/>
+            </column>
+        </createTable>
+		<addUniqueConstraint
+        	columnNames="nome,estado"
+        	constraintName="unique_cidade"
+     	    tableName="cidades"
+        />
+    </changeSet>
+
+</databaseChangeLog>

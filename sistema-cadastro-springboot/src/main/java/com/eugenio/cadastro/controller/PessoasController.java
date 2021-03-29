@@ -2,6 +2,7 @@ package com.eugenio.cadastro.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eugenio.cadastro.dto.PessoaListagemDTO;
 import com.eugenio.cadastro.model.Pessoa;
 import com.eugenio.cadastro.repository.Pessoas;
 
@@ -27,23 +29,43 @@ public class PessoasController {
 
 	@Autowired
 	private Pessoas pessoas;
+	
+	
+	/**
+	 * @return retorna somente o Id e o Nome das pessoas
+	 */
+	@GetMapping("/listagem")
+	public ArrayList<PessoaListagemDTO> listarNomes() {
+	  List<Pessoa> listapessoas = pessoas.findAll();
+	  List<PessoaListagemDTO> pessoasDTO = new ArrayList<>();
+	  listapessoas.forEach(c -> {
+		  pessoasDTO.add(new PessoaListagemDTO(c.getId(),c.getNome()));
+	  });
+	  return (ArrayList<PessoaListagemDTO>) pessoasDTO;
+	}
 
+	
+	/**
+	 * @return retorna a lista de todas pessoas com todos seus dados
+	 */
 	@GetMapping
 	public ArrayList<Pessoa> listar() {
 	  return (ArrayList<Pessoa>) pessoas.findAll();
 	}
 	
-	// criar pessoa
+	/**
+	 * @param pessoa - objeto da pessoa a ser salva
+	 * @return salva a pessoa no repositorio
+	 */
 	@PostMapping
 	public Pessoa criarPessoa(@RequestBody Pessoa pessoa) {
-		if((pessoa.getNome()==null)||(pessoa.getEmail()==null)||
-		   (pessoa.getCelular()==null)) {
-			return null;
-		}
-		else {return pessoas.save(pessoa);}
+		 return pessoas.save(pessoa);
 	}	
 	
-	// get pessoa by id rest api
+	/**
+	 * @param id - Id da pessoa a ser encontrada no repositorio
+	 * @return retorna o objeto da pessoa encontrada
+	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<Pessoa> getPessoaById(@PathVariable(value = "id") Long id) {
 	  java.util.Optional<Pessoa> pessoa = pessoas.findById(id);
@@ -54,7 +76,11 @@ public class PessoasController {
 		   return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
-	// atualizando pessoa
+	/**
+	 * @param id - Id da pessoa a ser encontrada no repositorio
+	 * @param pessoaDetalhes - Dados da pessoa a ser atualizada
+	 * @return retorna o objeto da pessoa atualizada
+	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<Pessoa> atualizaPessoa(@PathVariable Long id, @RequestBody Pessoa pessoaDetalhes){
 		java.util.Optional<Pessoa> pessoa = pessoas.findById(id);
@@ -64,20 +90,20 @@ public class PessoasController {
 			pessoaNova.setNome(pessoaDetalhes.getNome());
 			pessoaNova.setEmail(pessoaDetalhes.getEmail());
 			pessoaNova.setCelular(pessoaDetalhes.getCelular());
-			
-			if((pessoaNova.getNome().contentEquals(""))||(pessoaNova.getEmail().contentEquals(""))||
-					   (pessoaNova.getCelular().contentEquals(""))) {
-						return null;
-			}else {
+
 		    pessoas.save(pessoaNova);
 		        return new ResponseEntity<Pessoa>(pessoaNova, HttpStatus.OK);
-			}
+			
 		}
 		else
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+	}
 			
-	// deletando pessoa
+
+	/**
+	 * @param id - Id da pessoa a ser deletada
+	 * @return retorna o status
+	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Map<String, Boolean>> deletaPessoa(@PathVariable Long id){
 		java.util.Optional<Pessoa> pessoa = pessoas.findById(id);

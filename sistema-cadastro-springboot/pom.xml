@@ -18,6 +18,14 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<thymeleaf-layout-dialect.version>2.0.4</thymeleaf-layout-dialect.version>
+		
+		<liquibase-maven-plugin.version>3.5.0</liquibase-maven-plugin.version>
+		<liquibase-hibernate5.version>3.6</liquibase-hibernate5.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<javassist.version>3.24.0-GA</javassist.version>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd-HHmmss</maven.build.timestamp.format>
+		
 	</properties>
 	<dependencies>
 		<dependency>
@@ -35,7 +43,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency> 
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -50,6 +58,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.11</version>
 			<scope>runtime</scope>
 		</dependency>
 
@@ -58,6 +67,27 @@
     		<artifactId>hibernate-core</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+			<version>4.3.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	
 	</dependencies>
 
 	<build>
@@ -65,7 +95,17 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+				<configuration> 
+				<finalName>spring-cadastro</finalName>
+				</configuration>
+		    </plugin>
+			
+			<plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+            </plugin>
+
+            
 		</plugins>
 	</build>
 
