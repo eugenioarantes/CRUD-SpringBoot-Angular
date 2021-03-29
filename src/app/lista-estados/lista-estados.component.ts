@@ -3,19 +3,22 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Estado } from '../estado';
 import { EstadoService } from '../estado.service';
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-lista-estados',
   templateUrl: './lista-estados.component.html',
-  styleUrls: ['./lista-estados.component.css']
+  styleUrls: ['./lista-estados.component.css'],
+  providers:[ConfirmationService,MessageService]
 })
 export class ListaEstadosComponent implements OnInit {
 
   estados: Estado[];
   items: MenuItem[];
 
-  constructor(private estadoService: EstadoService,
-    private router:Router) { }
+  constructor(private estadoService: EstadoService,private router:Router,
+    private confirmationService: ConfirmationService,
+     private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getEstados();
@@ -59,11 +62,31 @@ export class ListaEstadosComponent implements OnInit {
     this.router.navigate(['cadastro/atualizarestado',id]);
   }
 
-  excluirEstado(id:number){
-    this.estadoService.deletarEstado(id).subscribe(data => {
-      this.getEstados();
+  excluirEstado(id:number,event:Event){
+    
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Deseja mesmo excluir esse estado?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel:'Sim',
+      rejectLabel:'Nao',
+      accept: () => {
+
+        this.estadoService.deletarEstado(id).subscribe(data => {
+          this.messageService.add({severity:'success',
+          summary:'Estado Removido com Sucesso'});
+          this.getEstados();
+        },
+        error =>{
+          this.messageService.add({severity:'error',
+          summary:'Impossível Remover',detail:'Este estado contém cidades cadastradas!'});  
+        });
+      },
+      reject: () => {}
+      
     });
   }
+
 
   detalhesEstado(id:number){
     this.router.navigate(['cadastro/detalhesestado',id]);

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Pessoa } from '../pessoa';
 import { PessoaService } from '../pessoa.service';
-import {MessageService} from 'primeng/api';
+import {MessageService}  from 'primeng/api';
 
 @Component({
   selector: 'app-atualizar-pessoa',
@@ -15,8 +15,8 @@ export class AtualizarPessoaComponent implements OnInit {
   id:number;
   pessoa: Pessoa = new Pessoa();
 
-  constructor(private pessoaService: PessoaService, private messageService: MessageService,
-    private route: ActivatedRoute, private router: Router) { }
+  constructor(private pessoaService: PessoaService,private route: ActivatedRoute,
+              private router: Router,private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -31,11 +31,11 @@ export class AtualizarPessoaComponent implements OnInit {
 
   atualizarPessoa(){
     this.pessoaService.atualizarPessoa(this.id,this.pessoa).subscribe(data => {
-      if (data!=null){
-      this.voltarMenuPessoa();
-      }else{
-        this.messageService.add({severity:'warn', summary:'Campo Vazio', detail:'Por favor preencha todos os campos'});
-      }
+      this.voltarMenuPessoa(); 
+    },
+    error=>{
+      this.messageService.add({severity:'error',
+          summary:'Email ou Celular já cadastrado', detail:'Tente novamente!'});
     });
   }
 }

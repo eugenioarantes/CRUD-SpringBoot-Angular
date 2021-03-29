@@ -26,7 +26,8 @@ import { CriarCidadeComponent } from './criar-cidade/criar-cidade.component';
 import { AtualizarCidadeComponent } from './atualizar-cidade/atualizar-cidade.component';
 import { DetalhesCidadeComponent } from './detalhes-cidade/detalhes-cidade.component';
 import {DropdownModule} from 'primeng/dropdown';
-
+import {ConfirmPopupModule} from 'primeng/confirmpopup';
+import {ToolbarModule} from 'primeng/toolbar';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import {DropdownModule} from 'primeng/dropdown';
     FormsModule,
     SplitButtonModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    ConfirmPopupModule,
+    ToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

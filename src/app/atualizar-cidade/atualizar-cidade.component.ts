@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageService, SelectItem} from 'primeng/api';
 import { Cidade } from '../cidade';
 import { CidadeService } from '../cidade.service';
 import { Estado } from '../estado';
 import { EstadoService } from '../estado.service';
-
+import {MessageService} from 'primeng/api';
 @Component({
   selector: 'app-atualizar-cidade',
   templateUrl: './atualizar-cidade.component.html',
@@ -19,8 +18,9 @@ export class AtualizarCidadeComponent implements OnInit {
 
   estados: Estado[];
 
-  constructor(private cidadeService: CidadeService, private messageService: MessageService,
-    private route: ActivatedRoute, private router: Router,private estadosService: EstadoService) { }
+  constructor(private cidadeService: CidadeService,private route: ActivatedRoute, 
+              private router: Router,private estadosService: EstadoService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     
@@ -40,15 +40,11 @@ export class AtualizarCidadeComponent implements OnInit {
   atualizarCidade(){
     
     this.cidadeService.atualizarCidade(this.id,this.cidade).subscribe(data => {
-    
-      if (data!=null){
-      console.log("cidade:",this.cidade);
-
       this.voltarMenuCidade();
-      }else{ 
-        this.messageService.add({severity:'warn', summary:'Campo Vazio',
-         detail:'Por favor preencha todos os campos'});
-      }
+    },
+    error=>{
+      this.messageService.add({severity:'error',
+        summary:'Esta cidade já existe!', detail:'Tente outro cadastro!'});
     });
   }
   private getEstados(){

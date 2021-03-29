@@ -1,18 +1,30 @@
 
 <div class="container" style="width: 1000px;">
-
+  <p-toast>
+  </p-toast>
+  <p-toolbar>
+  <div class="p-toolbar-group-left">
     <p-splitButton label="Selecione a Categoria" [model]="items"></p-splitButton>
     &nbsp;&nbsp;
     <button pButton type="button" icon="pi pi-plus" iconPos="left"
             label="Nova Cidade" (click)="btnNovaCidade()" class="p-button-success">
     </button>
-    
-  <br><br><br>
-  <p-table  [value]="cidades" [responsive]="true" [paginator]="true" [rows]="20" 
-  [resizableColumns]="true" [scrollable]="true" scrollHeight="150px">
+  </div>
+    <div class="p-toolbar-group-right">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input #filtroCidade pInputText type="text" 
+        (input)="tabela.filterGlobal(filtroCidade.value, 'contains')" placeholder="procurar">
+      </span>
+   </div>
+  </p-toolbar>
+  
+  <p-table  #tabela [value]="cidades" [responsive]="true" [paginator]="true" [rows]="20" 
+  [resizableColumns]="true" [scrollable]="true" scrollHeight="150px"
+  [globalFilterFields]="['nome']">
       <ng-template pTemplate="header" header="Custom Header" styleClass="dark-table">
           
-          <tr >
+          <tr>
               
               <th style="width:5%; text-align: center" class="p-pi-save"> Cidades</th>
       
@@ -32,9 +44,10 @@
               <button pButton type="button" icon="pi pi-pencil" iconPos="left"
               (click)="atualizarCidade(cidade.id)"   class="p-button-text  p-button-outlined ">
               </button>
-  
+              
+              <p-confirmPopup></p-confirmPopup>
               <button pButton type="button" icon="pi pi-trash" iconPos="left"
-              (click)="excluirCidade(cidade.id)"  class="p-button-text p-button-outlined p-button-danger">
+              (click)="excluirCidade(cidade.id,$event)"  class="p-button-text p-button-outlined p-button-danger">
               </button>
             </td>
         

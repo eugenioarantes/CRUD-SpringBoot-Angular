@@ -23,6 +23,7 @@ export class DetalhesCidadeComponent implements OnInit {
 
     this.cidadeService.getCidadeById(this.id).subscribe(data => {
       this.cidade=data;
+      console.log(data);
     });
   }
 

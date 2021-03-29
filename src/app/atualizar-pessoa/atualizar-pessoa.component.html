@@ -1,7 +1,5 @@
 <div class="container" style="width: 400px;" >
-
-    <p-toast>
-    </p-toast>
+    <p-toast></p-toast>
     <h3 > Atualizar Pessoa</h3>
     <br>
     <div class="p-grid p-fluid">
@@ -9,7 +7,8 @@
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                     <input type="text" pInputText placeholder="Nome" id="nome" 
-                            [(ngModel)]="pessoa.nome" name="nome">         
+                            [(ngModel)]="pessoa.nome" name="nome" required minlength="3"
+                            #nome="ngModel">         
                 </div>
             
                  <br>
@@ -17,7 +16,8 @@
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                     <input type="text" pInputText placeholder="Email" id="email"
-                            [(ngModel)]="pessoa.email" name="email">         
+                            [(ngModel)]="pessoa.email" name="email" required minlength="13"
+                            #email="ngModel">         
                 </div>
             
                  <br>
@@ -25,7 +25,8 @@
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
                     <input type="text" pInputText placeholder="Celular" id="celular"
-                            [(ngModel)]="pessoa.celular" name="celular">
+                            [(ngModel)]="pessoa.celular" name="celular" required minlength="11"
+                            #celular="ngModel">
                     
                 </div>
     
@@ -36,7 +37,8 @@
     
     <div style="text-align: center;">
         <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
-        label="Atualizar" (click)="atualizarPessoa()">
+        label="Atualizar" (click)="atualizarPessoa()" 
+        [disabled]="((!nome.valid)||(!email.valid)||(!celular.valid))">
         </button>
     
             &nbsp;&nbsp;

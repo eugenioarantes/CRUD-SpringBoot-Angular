@@ -8,7 +8,7 @@ import{Estado} from './estado'
 })
 export class EstadoService {
 
-   baseUrl="http://localhost:8080/cadastro/estados";
+   baseUrl="http://localhost:8086/cadastro/estados";
 
   constructor(private httpClient: HttpClient) { }
 

@@ -1,7 +1,5 @@
 <div class="container" style="width: 400px;" >
-
-    <p-toast>
-    </p-toast>
+    <p-toast></p-toast>
     <h3 > Atualizar Cidade</h3>
     <br>
     <div class="p-grid p-fluid">
@@ -9,14 +7,16 @@
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-flag"></i></span>
                     <input type="text" pInputText placeholder="Nome" id="nome" 
-                            [(ngModel)]="cidade.nome" name="nome">         
+                            [(ngModel)]="cidade.nome" name="nome" required 
+                            minlength="3" #nome="ngModel">         
                 </div>
             
                  <br>
                  <div>
                     <p-dropdown [options]="estados" [(ngModel)]="cidade.estado" 
                                 placeholder="Selecione um estado" [virtualScroll]="true" 
-                                [itemSize]="5" [filter]="false" optionLabel="nome">
+                                [itemSize]="5" [filter]="false" optionLabel="nome" required 
+                                 #estado="ngModel">
                     </p-dropdown>
                 </div>
     
@@ -27,7 +27,8 @@
     
     <div style="text-align: center;">
         <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
-        label="Atualizar" (click)="atualizarCidade()">
+             label="Atualizar" (click)="atualizarCidade()"
+             [disabled]="((!nome.valid)||(!estado.valid))">
         </button>
     
             &nbsp;&nbsp;

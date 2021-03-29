@@ -1,5 +1,4 @@
 <div class="container" style="width: 400px;" >
-
     <p-toast>
     </p-toast>
     <h3 > Adicionar Pessoa</h3>
@@ -10,7 +9,9 @@
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input type="text" pInputText placeholder="Nome" id="nome" 
-                        [(ngModel)]="pessoa.nome" name="nome">         
+                       [(ngModel)]="pessoa.nome" name="nome" required minlength="3"
+                        #nome="ngModel">
+                    
             </div>
         
              <br>
@@ -18,7 +19,8 @@
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                 <input type="text" pInputText placeholder="Email" id="email"
-                        [(ngModel)]="pessoa.email" name="email">         
+                        [(ngModel)]="pessoa.email" name="email" required minlength="13"
+                         #email="ngModel">         
             </div>
         
              <br>
@@ -26,9 +28,24 @@
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
                 <input type="text" pInputText placeholder="Celular" id="celular"
-                        [(ngModel)]="pessoa.celular" name="celular">
+                        [(ngModel)]="pessoa.celular" name="celular"
+                        class="form-control" required minlength="11"
+                         #celular="ngModel" >
                 
             </div>
+
+            <!-- <div *ngIf="name.invalid && (name.dirty )"
+                class="alert alert-danger">
+
+                 <div *ngIf="name.errors.required " >
+                    <small id="celular-help" class="p-error">Campo obrigatório.</small>
+                 </div>
+                 <div *ngIf="name.errors.minlength">
+                    <small id="celular2-help" class="p-error">Número Inválido.</small>
+                 </div>
+            </div>
+             -->
+         
 
         </div>
            
@@ -38,7 +55,8 @@
 
 <div style="text-align: center;">
     <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
-    label="Salvar" (click)="salvarPessoa()">
+    label="Salvar" (click)="salvarPessoa()" id="btnSalvar" 
+    [disabled]="((!nome.valid)||(!email.valid)||(!celular.valid))">
     </button>
 
         &nbsp;&nbsp;

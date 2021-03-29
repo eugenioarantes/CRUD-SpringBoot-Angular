@@ -8,9 +8,13 @@ import { Cidade } from './cidade';
 })
 export class CidadeService {
 
-  baseUrl="http://localhost:8080/cadastro/cidades";
+  baseUrl="http://localhost:8086/cadastro/cidades";
 
   constructor(private httpClient: HttpClient) { }
+
+  getNomesCidade():Observable<Cidade[]>{
+    return this.httpClient.get<Cidade[]>(`${this.baseUrl}/listagem`);
+  }
 
   getListaCidade():Observable<Cidade[]>{
     return this.httpClient.get<Cidade[]>(`${this.baseUrl}`);

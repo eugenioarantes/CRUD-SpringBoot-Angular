@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Pessoa } from '../pessoa';
 import { PessoaService } from '../pessoa.service';
 import {MessageService} from 'primeng/api';
-
 @Component({
   selector: 'app-criar-pessoa',
   templateUrl: './criar-pessoa.component.html',
@@ -17,7 +15,7 @@ export class CriarPessoaComponent implements OnInit {
   pessoa: Pessoa = new Pessoa();
 
   constructor(private router:Router, private pessoaService: PessoaService,
-    private messageService: MessageService) { }
+  private messageService:MessageService) { }
 
 
   ngOnInit(): void {
@@ -32,11 +30,11 @@ export class CriarPessoaComponent implements OnInit {
     
     this.pessoaService.criarPessoa(this.pessoa).subscribe(data => {
       console.log(data);
-      if (data==null){
-      this.messageService.add({severity:'warn', summary:'Campo Vazio', detail:'Por favor preencha todos os campos'});
-      }else{
         this.voltarMenuPessoa();
-      }
+    },
+    error=>{
+      this.messageService.add({severity:'error',
+          summary:'Email ou Celular já cadastrado', detail:'Tente novamente!'});
     });
     
   }

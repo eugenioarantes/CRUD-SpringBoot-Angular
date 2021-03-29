@@ -1,14 +1,28 @@
 <div class="container" style="width: 1000px;">
 
+  <p-toast>
+  </p-toast>
+  <p-toolbar>
+  <div  class="p-toolbar-group-left">
     <p-splitButton label="Selecione a Categoria" [model]="items"></p-splitButton>
     &nbsp;&nbsp;
     <button pButton type="button" icon="pi pi-plus" iconPos="left"
             label="Novo Estado" (click)="btnNovoEstado()" class="p-button-success">
     </button>
-    
-  <br><br><br>
-  <p-table  [value]="estados" [responsive]="true" [paginator]="true" [rows]="20" 
-  [resizableColumns]="true" [scrollable]="true" scrollHeight="150px">
+  </div>
+
+  <div class="p-toolbar-group-right">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input #filtroEstado pInputText type="text" 
+        (input)="tabela.filterGlobal(filtroEstado.value, 'contains')" placeholder="procurar">
+      </span>
+   </div>
+
+  </p-toolbar>
+  <p-table  #tabela [value]="estados" [responsive]="true" [paginator]="true" [rows]="20" 
+            [resizableColumns]="true" [scrollable]="true" scrollHeight="150px"
+            [globalFilterFields]="['nome']">
       <ng-template pTemplate="header" header="Custom Header" styleClass="dark-table">
           
           <tr >
@@ -31,9 +45,10 @@
               <button pButton type="button" icon="pi pi-pencil" iconPos="left"
               (click)="atualizarEstado(estado.id)" class="p-button-text  p-button-outlined ">
               </button>
-  
+
+              <p-confirmPopup></p-confirmPopup>
               <button pButton type="button" icon="pi pi-trash" iconPos="left"
-              (click)="excluirEstado(estado.id)"  class="p-button-text p-button-outlined p-button-danger">
+              (click)="excluirEstado(estado.id,$event)"  class="p-button-text p-button-outlined p-button-danger">
               </button>
             </td>
         

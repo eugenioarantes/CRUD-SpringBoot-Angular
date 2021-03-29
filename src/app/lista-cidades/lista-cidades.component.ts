@@ -3,22 +3,26 @@ import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Cidade } from '../cidade';
 import { CidadeService } from '../cidade.service';
+import {ConfirmationService,MessageService} from 'primeng/api';
 
 @Component({
   selector: 'app-lista-cidades',
   templateUrl: './lista-cidades.component.html',
-  styleUrls: ['./lista-cidades.component.css']
+  styleUrls: ['./lista-cidades.component.css'],
+  providers:[ConfirmationService,MessageService]
 })
 export class ListaCidadesComponent implements OnInit {
 
   cidades: Cidade[];
   items: MenuItem[];
 
-  constructor(private cidadeService: CidadeService,
-    private router:Router) { }
+  constructor(private cidadeService: CidadeService,private router:Router,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.getCidades();
+
 
     this.items = [
       {label: 'Lista de Pessoas',command: () => {
@@ -46,8 +50,11 @@ export class ListaCidadesComponent implements OnInit {
   }
 
   private getCidades(){
-    this.cidadeService.getListaCidade().subscribe(data => {
+    this.cidadeService.getNomesCidade().subscribe(data => {
       this.cidades=data;
+
+        console.log(data);
+
     });
   }
 
@@ -56,16 +63,34 @@ export class ListaCidadesComponent implements OnInit {
   }
 
   atualizarCidade(id:number){
+    this.cidadeService.getListaCidade().subscribe(data => {
+      this.cidades=data;
+    });
     this.router.navigate(['cadastro/atualizarcidade',id]);
   }
 
-  excluirCidade(id:number){
-    this.cidadeService.deletarCidade(id).subscribe(data => {
-      this.getCidades();
+  excluirCidade(id:number,event: Event){
+
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Deseja mesmo excluir essa cidade?',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel:'Sim',
+      rejectLabel:'Nao',
+      accept: () => {
+        this.cidadeService.deletarCidade(id).subscribe(data => {
+          this.messageService.add({severity:'success',
+          summary:'Cidade Removida com Sucesso'});
+          this.getCidades();
+        });
+      },
+      reject: () => {}
     });
+    
   }
 
   detalhesCidade(id:number){
+
     this.router.navigate(['cadastro/detalhescidade',id]);
   }
 

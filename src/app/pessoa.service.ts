@@ -8,10 +8,13 @@ import { Pessoa } from './pessoa'
 })
 export class PessoaService {
   
-   baseUrl="http://localhost:8080/cadastro/pessoas";
+   baseUrl="http://localhost:8086/cadastro/pessoas";
 
   constructor(private httpClient: HttpClient) { }
 
+  getNomesPessoa():Observable<Pessoa[]>{
+    return this.httpClient.get<Pessoa[]>(`${this.baseUrl}/listagem`);
+  }
   getListaPessoa():Observable<Pessoa[]>{
     return this.httpClient.get<Pessoa[]>(`${this.baseUrl}`);
   }

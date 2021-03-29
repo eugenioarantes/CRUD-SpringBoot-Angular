@@ -31,11 +31,11 @@ export class AtualizarEstadoComponent implements OnInit {
 
   atualizarEstado(){
     this.estadoService.atualizarEstado(this.id,this.estado).subscribe(data => {
-      if (data!=null){
       this.voltarMenuEstado();
-      }else{
-        this.messageService.add({severity:'warn', summary:'Campo Vazio', detail:'Por favor preencha todos os campos'});
-      }
+    },
+    error=>{
+      this.messageService.add({severity:'error',
+          summary:'Nome ou sigla já cadastrada!', detail:'Tente novamente!'});
     });
   }
 }

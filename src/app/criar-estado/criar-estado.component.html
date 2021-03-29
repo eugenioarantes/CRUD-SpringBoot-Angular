@@ -1,7 +1,5 @@
 <div class="container" style="width: 400px;" >
-
-    <p-toast>
-    </p-toast>
+    <p-toast></p-toast>
     <h3 > Adicionar Estado</h3>
     <br>
     
@@ -10,7 +8,8 @@
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-flag"></i></span>
                 <input type="text" pInputText placeholder="Nome" id="nome" 
-                        [(ngModel)]="estado.nome" name="nome">         
+                        [(ngModel)]="estado.nome" name="nome" required minlength="4"
+                         #nome="ngModel">         
             </div>
         
              <br>
@@ -18,7 +17,8 @@
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-shield"></i></span>
                 <input type="text" pInputText placeholder="Sigla" id="sigla"
-                        [(ngModel)]="estado.sigla" name="sigla">         
+                        [(ngModel)]="estado.sigla" name="sigla" required 
+                        minlength="2" maxlength="2" #sigla="ngModel">         
             </div>
         </div>
            
@@ -28,7 +28,8 @@
 
 <div style="text-align: center;">
     <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
-    label="Salvar" (click)="salvarEstado()">
+    label="Salvar" (click)="salvarEstado()"
+    [disabled]="((!nome.valid)||(!sigla.valid))">
     </button>
 
         &nbsp;&nbsp;
