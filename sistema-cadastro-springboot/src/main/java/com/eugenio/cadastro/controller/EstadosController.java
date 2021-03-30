@@ -2,6 +2,7 @@ package com.eugenio.cadastro.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.eugenio.cadastro.dto.EstadoListagemDTO;
 import com.eugenio.cadastro.model.Estado;
 import com.eugenio.cadastro.repository.Estados;
 
@@ -32,8 +33,13 @@ public class EstadosController {
 		 * @return retorna todos os estados com seus dados
 		 */
 		@GetMapping
-		public ArrayList<Estado> listar() {
-			return (ArrayList<Estado>) estados.findAll();
+		public ArrayList<EstadoListagemDTO> listar() {
+			List<Estado> lista = estados.findAll();
+			List<EstadoListagemDTO> estadosDTO = new ArrayList<>();
+			lista.forEach(e -> {
+				estadosDTO.add(new EstadoListagemDTO(e.getId(),e.getNome(),e.getSigla()));
+			 });
+			return (ArrayList<EstadoListagemDTO>) estadosDTO;
 		}
 	
 		/**
@@ -41,8 +47,13 @@ public class EstadosController {
 		 * @return salva o estado no repositorio
 		 */
 		@PostMapping
-		public Estado criarEstado(@RequestBody Estado estado) {
-			return estados.save(estado);
+		public EstadoListagemDTO criarEstado(@RequestBody Estado estado) {
+			Estado e = estados.save(estado);
+			EstadoListagemDTO estadoDTO = new EstadoListagemDTO();
+				estadoDTO.setId(e.getId());
+				estadoDTO.setNome(e.getNome());
+				estadoDTO.setSigla(e.getSigla());
+					return estadoDTO;
 		}	
 		
 		
@@ -51,11 +62,16 @@ public class EstadosController {
 		 * @return retorna o estado encontrado
 		 */
 		@GetMapping("/{id}")
-		public ResponseEntity<Estado> getEstadoById(@PathVariable(value = "id") Long id) {
+		public ResponseEntity<EstadoListagemDTO> getEstadoById(@PathVariable(value = "id") Long id) {
 		 java.util.Optional<Estado> estado = estados.findById(id);
 					
+		 	EstadoListagemDTO estadoDTO = new EstadoListagemDTO();
+		 	estadoDTO.setId(estado.get().getId());
+		 	estadoDTO.setNome(estado.get().getNome());
+		 	estadoDTO.setSigla(estado.get().getSigla());	
+		 
 		 	if(estado.isPresent())
-			  return new ResponseEntity<Estado>(estado.get(), HttpStatus.OK);
+			  return new ResponseEntity<EstadoListagemDTO>(estadoDTO, HttpStatus.OK);
 		 	else
 			  return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 			}
@@ -66,8 +82,9 @@ public class EstadosController {
 		 * @return retorna o estado atualizado
 		 */
 		@PutMapping("/{id}")
-		public ResponseEntity<Estado> atualizaEstado(@PathVariable Long id, @RequestBody Estado estadoDetalhes){
+		public ResponseEntity<EstadoListagemDTO> atualizaEstado(@PathVariable Long id, @RequestBody Estado estadoDetalhes){
 			java.util.Optional<Estado> estado = estados.findById(id);
+			EstadoListagemDTO estadoDTO = new EstadoListagemDTO();
 					
 			if(estado.isPresent()){
 				Estado estadoNovo = estado.get();
@@ -75,7 +92,12 @@ public class EstadosController {
 				estadoNovo.setSigla(estadoDetalhes.getSigla());
 
 			    estados.save(estadoNovo);
-			        return new ResponseEntity<Estado>(estadoNovo, HttpStatus.OK);
+			    
+			      estadoDTO.setId(estadoNovo.getId());
+			      estadoDTO.setNome(estadoNovo.getNome());
+			      estadoDTO.setSigla(estadoNovo.getSigla());
+				   
+			        return new ResponseEntity<EstadoListagemDTO>(estadoDTO, HttpStatus.OK);
 				
 			}
 			else

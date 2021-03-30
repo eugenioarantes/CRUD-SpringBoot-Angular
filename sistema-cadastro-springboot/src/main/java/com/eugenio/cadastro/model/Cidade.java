@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,11 +28,11 @@ public class Cidade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="nome")
+	@Column(name="nome", length = 20)
+	@NotNull
 	private String nome;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@ManyToOne
 	@JoinColumn(name = "estado")
 	private Estado estado;
 	

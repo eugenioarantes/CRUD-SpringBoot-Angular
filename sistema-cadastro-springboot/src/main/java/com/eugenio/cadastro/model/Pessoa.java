@@ -6,8 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.springframework.lang.NonNull;
-
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,14 +24,16 @@ public class Pessoa {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NonNull
-	@Column(name="nome")
+	@Column(name="nome", length=50)
+	@NotNull
 	private String nome;
 	
-	@Column(name="email")
+	@Column(name="email",length=50)
+	@NotNull
 	private String email;
 	
-	@Column(name="celular")
+	@Column(name="celular",length=20)
+	@NotNull
 	private String celular;
 
 	public static long getSerialversionuid() {

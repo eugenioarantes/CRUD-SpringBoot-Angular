@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.eugenio.cadastro.dto.PessoaListagemCompletaDTO;
 import com.eugenio.cadastro.dto.PessoaListagemDTO;
 import com.eugenio.cadastro.model.Pessoa;
 import com.eugenio.cadastro.repository.Pessoas;
@@ -49,8 +49,14 @@ public class PessoasController {
 	 * @return retorna a lista de todas pessoas com todos seus dados
 	 */
 	@GetMapping
-	public ArrayList<Pessoa> listar() {
-	  return (ArrayList<Pessoa>) pessoas.findAll();
+	public ArrayList<PessoaListagemCompletaDTO> listar() {
+		List<Pessoa> lista = pessoas.findAll();
+		List<PessoaListagemCompletaDTO> pessoasDTO = new ArrayList<>();
+		lista.forEach(p -> {
+			pessoasDTO.add(new PessoaListagemCompletaDTO(p.getId(),p.getNome(),p.getEmail(),p.getCelular()));
+		 });
+		
+	  return (ArrayList<PessoaListagemCompletaDTO>) pessoasDTO;
 	}
 	
 	/**
@@ -58,8 +64,14 @@ public class PessoasController {
 	 * @return salva a pessoa no repositorio
 	 */
 	@PostMapping
-	public Pessoa criarPessoa(@RequestBody Pessoa pessoa) {
-		 return pessoas.save(pessoa);
+	public PessoaListagemCompletaDTO criarPessoa(@RequestBody Pessoa pessoa) {
+		Pessoa p = pessoas.save(pessoa);
+		PessoaListagemCompletaDTO pessoaDTO = new PessoaListagemCompletaDTO();
+			pessoaDTO.setId(p.getId());
+			pessoaDTO.setNome(p.getNome());
+			pessoaDTO.setEmail(p.getEmail());
+			pessoaDTO.setCelular(p.getCelular());
+				return pessoaDTO;
 	}	
 	
 	/**
@@ -67,11 +79,16 @@ public class PessoasController {
 	 * @return retorna o objeto da pessoa encontrada
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<Pessoa> getPessoaById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<PessoaListagemCompletaDTO> getPessoaById(@PathVariable(value = "id") Long id) {
 	  java.util.Optional<Pessoa> pessoa = pessoas.findById(id);
-				
+	  PessoaListagemCompletaDTO pessoaDTO = new PessoaListagemCompletaDTO();
+		 pessoaDTO.setId(pessoa.get().getId());
+		 pessoaDTO.setNome(pessoa.get().getNome());
+		 pessoaDTO.setEmail(pessoa.get().getEmail());
+		 pessoaDTO.setCelular(pessoa.get().getCelular());
+		 
 		if(pessoa.isPresent())
-		   return new ResponseEntity<Pessoa>(pessoa.get(), HttpStatus.OK);
+		   return new ResponseEntity<PessoaListagemCompletaDTO>(pessoaDTO, HttpStatus.OK);
 		else
 		   return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -82,9 +99,10 @@ public class PessoasController {
 	 * @return retorna o objeto da pessoa atualizada
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<Pessoa> atualizaPessoa(@PathVariable Long id, @RequestBody Pessoa pessoaDetalhes){
+	public ResponseEntity<PessoaListagemCompletaDTO> atualizaPessoa(@PathVariable Long id, @RequestBody Pessoa pessoaDetalhes){
 		java.util.Optional<Pessoa> pessoa = pessoas.findById(id);
-				
+		PessoaListagemCompletaDTO pessoaDTO = new PessoaListagemCompletaDTO();
+		
 		if(pessoa.isPresent()){
 			Pessoa pessoaNova = pessoa.get();
 			pessoaNova.setNome(pessoaDetalhes.getNome());
@@ -92,7 +110,13 @@ public class PessoasController {
 			pessoaNova.setCelular(pessoaDetalhes.getCelular());
 
 		    pessoas.save(pessoaNova);
-		        return new ResponseEntity<Pessoa>(pessoaNova, HttpStatus.OK);
+		    
+		    pessoaDTO.setId(pessoaNova.getId());
+		    pessoaDTO.setNome(pessoaNova.getNome());
+		    pessoaDTO.setEmail(pessoaNova.getEmail());
+		    pessoaDTO.setCelular(pessoaNova.getCelular());
+		    
+		        return new ResponseEntity<PessoaListagemCompletaDTO>(pessoaDTO, HttpStatus.OK);
 			
 		}
 		else

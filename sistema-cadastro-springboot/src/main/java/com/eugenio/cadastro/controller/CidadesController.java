@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.eugenio.cadastro.dto.CidadeListagemCompletaDTO;
 import com.eugenio.cadastro.dto.CidadeListagemDTO;
 import com.eugenio.cadastro.model.Cidade;
 import com.eugenio.cadastro.repository.Cidades;
@@ -47,10 +48,15 @@ public class CidadesController {
 	 * @return retorna a lista de todas cidades com todos seus dados
 	 */
 	@GetMapping
-	public ArrayList<Cidade> listar() {
+	public ArrayList<CidadeListagemCompletaDTO> listar() {
 
 		List<Cidade> lista = cidades.findAll();
-	  return (ArrayList<Cidade>) lista;
+		List<CidadeListagemCompletaDTO> cidadesDTO = new ArrayList<>();
+		lista.forEach(c -> {
+			cidadesDTO.add(new CidadeListagemCompletaDTO(c.getId(),c.getNome(),c.getEstado()));
+		 });
+		
+	  return (ArrayList<CidadeListagemCompletaDTO>) cidadesDTO;
 	}
 	
 	/**
@@ -58,8 +64,13 @@ public class CidadesController {
 	 * @return salva a cidade no repositório
 	 */
 	@PostMapping
-	public Cidade criarCidade(@Validated @RequestBody Cidade cidade) {
-		return cidades.save(cidade);
+	public CidadeListagemCompletaDTO criarCidade(@Validated @RequestBody Cidade cidade) {
+		Cidade c = cidades.save(cidade);
+		CidadeListagemCompletaDTO cidadeDTO = new CidadeListagemCompletaDTO();
+			cidadeDTO.setId(c.getId());
+			cidadeDTO.setNome(c.getNome());
+			cidadeDTO.setEstado(c.getEstado());
+				return cidadeDTO;
 	}	
 	
 	/**
@@ -67,11 +78,15 @@ public class CidadesController {
 	 * @return retorna a cidade encontrada a partir do id
 	 */
 	@GetMapping("/{id}")
-	public ResponseEntity<Cidade> getCidadeById(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<CidadeListagemCompletaDTO> getCidadeById(@PathVariable(value = "id") Long id) {
 		java.util.Optional<Cidade> cidade = cidades.findById(id);
+			CidadeListagemCompletaDTO cidadeDTO = new CidadeListagemCompletaDTO();
+			 cidadeDTO.setId(cidade.get().getId());
+			 cidadeDTO.setNome(cidade.get().getNome());
+			 cidadeDTO.setEstado(cidade.get().getEstado());
 						
 			if(cidade.isPresent())
-				return new ResponseEntity<Cidade>(cidade.get(), HttpStatus.OK);
+				return new ResponseEntity<CidadeListagemCompletaDTO>(cidadeDTO, HttpStatus.OK);
 			else
 				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
@@ -83,16 +98,22 @@ public class CidadesController {
 	 * @return - retorna a cidade atualizada
 	 */
 	@PutMapping("/{id}")
-	public ResponseEntity<Cidade> atualizaCidade(@PathVariable Long id, @RequestBody Cidade cidadeDetalhes){
+	public ResponseEntity<CidadeListagemCompletaDTO> atualizaCidade(@PathVariable Long id, @RequestBody Cidade cidadeDetalhes){
 		java.util.Optional<Cidade> cidade = cidades.findById(id);
-						
+		 CidadeListagemCompletaDTO cidadeDTO = new CidadeListagemCompletaDTO();
+		  
 			if(cidade.isPresent()){
 				Cidade cidadeNova = cidade.get();
 				cidadeNova.setNome(cidadeDetalhes.getNome());
 				cidadeNova.setEstado(cidadeDetalhes.getEstado());
 
 				  cidades.save(cidadeNova);
-				    return new ResponseEntity<Cidade>(cidadeNova, HttpStatus.OK);
+				  
+				   cidadeDTO.setId(cidadeNova.getId());
+				   cidadeDTO.setNome(cidadeNova.getNome());
+				   cidadeDTO.setEstado(cidadeNova.getEstado());
+				   
+				    return new ResponseEntity<CidadeListagemCompletaDTO>(cidadeDTO, HttpStatus.OK);
 			  }  
 			else
 					return new ResponseEntity<>(HttpStatus.NOT_FOUND);

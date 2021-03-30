@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,10 +25,12 @@ public class Estado {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="nome")
+	@Column(name="nome", length=20)
+	@NotNull
 	private String nome;
 	
-	@Column(name="sigla")
+	@Column(name="sigla", length=2)
+	@NotNull
 	private String sigla;
 	
 	public static long getSerialversionuid() {
