@@ -8,11 +8,11 @@ Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli
 
 • docker pull openjdk:11
 
-• docker pull eugenioarantes/spring-container:latest
+• docker pull eugenioarantes/spring-container:1.0
 
 ## Crie os containers e execute-os
 
-<h3>Criando container MYSQL e o executando</h3>
+<h3>Criando container MYSQL e verificando logs</h3>
 
 • docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=root -e MYSQL_USER=root -e MYSQL_USER_PASSWORD=root -e MYSQL_PASSWORD=root -e MYSQL_DATABASE=cadastro -d mysql:8.0.11
 
@@ -22,7 +22,7 @@ Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli
 
 <h3>Criando container da Aplicação Spring boot</h3>
 
-• docker run -p 8086:8086 --name spring-container --link mysql-container:mysql -d eugenioarantes/spring-container
+• docker run -p 8086:8086 --name spring-container --link mysql-container:mysql -d eugenioarantes/spring-container:1.0
 
 <h3> Startando os containers:</h3>
 
@@ -30,13 +30,15 @@ Este projeto foi gerado com [Angular CLI](https://github.com/angular/angular-cli
 
 • docker start spring-container
 
-<h3>Executando o container spring boot</h3>
+<h3>Verifique os logs do container spring boot</h3>
 
 • docker container logs -f spring-container
 
 ## Executando o projeto
 
-Execute `ng serve` na pasta do projeto angular. Navegue até `http://localhost:4200/`. O aplicativo será recarregado automaticamente se você alterar qualquer um dos arquivos de origem.
+Execute `npm install` na pasta do projeto angular para instalar as dependências do projeto.
+
+Depois execute `ng serve` também na pasta do projeto angular. Navegue até `http://localhost:4200/`. O aplicativo será recarregado automaticamente se você alterar qualquer um dos arquivos de origem.
 
 ## Andaime de código
 

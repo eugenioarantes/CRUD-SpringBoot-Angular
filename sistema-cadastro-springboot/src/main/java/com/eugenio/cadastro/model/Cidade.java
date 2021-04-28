@@ -28,7 +28,7 @@ public class Cidade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name="nome", length = 20)
+	@Column(name="nome", length = 50)
 	@NotNull
 	private String nome;
 	

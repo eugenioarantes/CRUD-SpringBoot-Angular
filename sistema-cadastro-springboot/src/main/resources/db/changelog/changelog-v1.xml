@@ -9,9 +9,15 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="nome" type="varchar(50)"/>
-            <column name="email" type="varchar(50)"/>
-            <column name="celular" type="varchar(20)"/>
+            <column name="nome" type="varchar(50)">
+             	 <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+             <constraints nullable="false"/>
+            </column>
+            <column name="celular" type="varchar(20)">
+             <constraints nullable="false"/>
+            </column>
         </createTable>
         <addUniqueConstraint
         	columnNames="email"
@@ -31,8 +37,12 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="nome" type="varchar(20)"/>
-            <column name="sigla" type="varchar(2)"/>
+            <column name="nome" type="varchar(20)">
+             <constraints nullable="false"/>
+            </column>
+            <column name="sigla" type="varchar(2)">
+             <constraints nullable="false"/>
+            </column>
         </createTable>
         <addUniqueConstraint
         	columnNames="nome"
@@ -51,9 +61,11 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="nome" type="varchar(20)"/>
+            <column name="nome" type="varchar(50)">
+             	<constraints nullable="false"/>
+            </column>
             <column name="estado" type="bigint">
-            <constraints foreignKeyName="estado" references="estados(id)" nullable="false"/>
+            	<constraints foreignKeyName="estado" references="estados(id)" nullable="false"/>
             </column>
         </createTable>
 		<addUniqueConstraint
