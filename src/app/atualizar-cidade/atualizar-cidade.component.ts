@@ -39,7 +39,10 @@ export class AtualizarCidadeComponent implements OnInit {
 
   atualizarCidade(){
     
-    this.cidadeService.atualizarCidade(this.id,this.cidade).subscribe(data => {
+    this.cidadeService.atualizarCidade(this.id,this.cidade).subscribe(async data => {
+      this.messageService.add({severity:'success',
+          summary:'Cidade Atualizada com sucesso!'});
+          await this.delay(2000);
       this.voltarMenuCidade();
     },
     error=>{
@@ -50,9 +53,16 @@ export class AtualizarCidadeComponent implements OnInit {
   private getEstados(){
     this.estadosService.getListaEstado().subscribe(data => {
       this.estados=data;
-      console.log("estados:",this.estados);  
     });
     
+  }
+
+  private delay(ms: number): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
+    });
   }
 
 }

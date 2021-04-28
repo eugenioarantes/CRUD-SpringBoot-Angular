@@ -1,5 +1,5 @@
 
-<div class="container" style="width: 1000px;">
+<div class="ui-lg">
   <p-toast>
   </p-toast>
   <p-toolbar>
@@ -26,17 +26,17 @@
           
           <tr>
               
-              <th style="width:5%; text-align: center" class="p-pi-save"> Cidades</th>
+              <th id="th1" class="p-pi-save"> Cidades</th>
       
-              <th style="width:3%; text-align: center;"> Ações</th>
+              <th id="th2"> Ações</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-cidade >
         <tr >
             
-            <td style="width:5%; text-align: left;" >{{cidade.nome}}</td>
+            <td id="td-nome" >{{cidade.nome}}</td>
            
-            <td style="width:3%; text-align: center;" >
+            <td id="td-acao" >
               <button pButton type="button" icon="pi pi-info" iconPos="left"
               (click)="detalhesCidade(cidade.id)" class="p-button-text  p-button-outlined ">
               </button>

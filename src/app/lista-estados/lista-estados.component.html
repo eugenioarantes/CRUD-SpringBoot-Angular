@@ -1,4 +1,4 @@
-<div class="container" style="width: 1000px;">
+<div class="ui-lg">
 
   <p-toast>
   </p-toast>
@@ -27,17 +27,17 @@
           
           <tr >
               
-              <th style="width:5%; text-align: center"> Estados</th>
+              <th id="th1"> Estados</th>
       
-              <th style="width:3%; text-align: center;"> Ações</th>
+              <th id="th2"> Ações</th>
           </tr>
       </ng-template>
       <ng-template pTemplate="body" let-estado >
         <tr >
             
-            <td style="width:5%; text-align: left;" >{{estado.nome}}</td>
+            <td id="td-nome" >{{estado.nome}}</td>
            
-            <td style="width:3%; text-align: center;" >
+            <td id="td-acao" >
               <button pButton type="button" icon="pi pi-info" iconPos="left"
               (click)="detalhesEstado(estado.id)" class="p-button-text  p-button-outlined ">
               </button>
@@ -58,3 +58,4 @@
   </p-table>
   </div>
   
+

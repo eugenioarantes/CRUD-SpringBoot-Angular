@@ -52,9 +52,6 @@ export class ListaCidadesComponent implements OnInit {
   private getCidades(){
     this.cidadeService.getNomesCidade().subscribe(data => {
       this.cidades=data;
-
-        console.log(data);
-
     });
   }
 

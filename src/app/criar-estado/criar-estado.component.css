@@ -1,13 +1,23 @@
-.container {
+#container {
     margin: 0;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%) }
+    transform: translate(-50%, -50%);
+    width: 400px;
+}
 
 h3{
     font-size: 20px;
     font-family:sans-serif;
+    text-align: center;
+}
+
+#div2{
+    width: 400px;
+}
+
+#div-botoes{
     text-align: center;
 }

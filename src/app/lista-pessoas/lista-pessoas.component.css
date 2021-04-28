@@ -4,4 +4,26 @@
     top: 50%;
     left: 50%;
     margin-right: -50%;
-    transform: translate(-50%, -50%) }
+    transform: translate(-50%, -50%);
+    width: 1000px;
+ }
+
+ #th1{
+    width:5%;
+    text-align: center;
+ }
+
+ #th2{
+    width:3%;
+    text-align: center;
+ }
+
+ #td-nome{
+    width:5%;
+    text-align: left;
+ }
+
+ #td-acao{
+    width:3%;
+    text-align: center;
+ } 

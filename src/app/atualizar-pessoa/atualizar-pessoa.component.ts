@@ -30,12 +30,23 @@ export class AtualizarPessoaComponent implements OnInit {
   }
 
   atualizarPessoa(){
-    this.pessoaService.atualizarPessoa(this.id,this.pessoa).subscribe(data => {
+    this.pessoaService.atualizarPessoa(this.id,this.pessoa).subscribe(async data => {
+      this.messageService.add({severity:'success',
+          summary:'Pessoa Atualizada com sucesso!'});
+          await this.delay(2000);
       this.voltarMenuPessoa(); 
     },
     error=>{
       this.messageService.add({severity:'error',
           summary:'Email ou Celular já cadastrado', detail:'Tente novamente!'});
+    });
+  }
+
+  private delay(ms: number): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
     });
   }
 }

@@ -28,8 +28,10 @@ export class CriarPessoaComponent implements OnInit {
 
   salvarPessoa(){
     
-    this.pessoaService.criarPessoa(this.pessoa).subscribe(data => {
-      console.log(data);
+    this.pessoaService.criarPessoa(this.pessoa).subscribe(async data => {
+      this.messageService.add({severity:'success',
+          summary:'Pessoa cadastrada com sucesso'});
+         await this.delay(2000);
         this.voltarMenuPessoa();
     },
     error=>{
@@ -39,4 +41,13 @@ export class CriarPessoaComponent implements OnInit {
     
   }
 
+  private delay(ms: number): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
+    });
+  }
+
 }
+

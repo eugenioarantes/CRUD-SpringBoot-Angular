@@ -1,13 +1,13 @@
-<div class="container" style="width: 400px;" >
+<div class="ui-lg" id="container">
     <p-toast></p-toast>
     <h3 > Atualizar Estado</h3>
     <br>
     <div class="p-grid p-fluid">
-            <div class="p-col-12 p-md-4" style="width: 400px;">
+            <div class="p-col-12 p-md-4" id="div2">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-flag"></i></span>
                     <input type="text" pInputText placeholder="Nome" id="nome" 
-                            [(ngModel)]="estado.nome" name="nome" required minlength="4"
+                            [(ngModel)]="estado.nome" name="nome" required minlength="4" maxlength="20"
                             #nome="ngModel">         
                 </div>
             
@@ -25,7 +25,7 @@
     </div>
     <br>
     
-    <div style="text-align: center;">
+    <div id="div-botoes">
         <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
         label="Atualizar" (click)="atualizarEstado()"
         [disabled]="((!nome.valid)||(!sigla.valid))">

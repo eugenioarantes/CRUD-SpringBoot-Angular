@@ -1,15 +1,15 @@
-<div class="container" style="width: 400px;" >
+<div class="ui-lg" id="container" >
     <p-toast>
     </p-toast>
     <h3 > Adicionar Pessoa</h3>
     <br>
     
 <div class="p-grid p-fluid">
-        <div class="p-col-12 p-md-4" style="width: 400px;">
+        <div class="p-col-12 p-md-4" id="div2">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input type="text" pInputText placeholder="Nome" id="nome" 
-                       [(ngModel)]="pessoa.nome" name="nome" required minlength="3"
+                       [(ngModel)]="pessoa.nome" name="nome" required minlength="3" maxlength="50"
                         #nome="ngModel">
                     
             </div>
@@ -20,7 +20,7 @@
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                 <input type="text" pInputText placeholder="Email" id="email"
                         [(ngModel)]="pessoa.email" name="email" required minlength="13"
-                         #email="ngModel">         
+                        maxlength="50" #email="ngModel">         
             </div>
         
              <br>
@@ -29,7 +29,7 @@
                 <span class="p-inputgroup-addon"><i class="pi pi-phone"></i></span>
                 <input type="text" pInputText placeholder="Celular" id="celular"
                         [(ngModel)]="pessoa.celular" name="celular"
-                        class="form-control" required minlength="11"
+                        class="form-control" required minlength="11" maxlength="20"
                          #celular="ngModel" >
                 
             </div>
@@ -39,7 +39,7 @@
   
 <br>
 
-<div style="text-align: center;">
+<div id="div-botoes">
     <button pButton type="submit" icon="pi pi-save" iconPos="left" class="p-button-success"
     label="Salvar" (click)="salvarPessoa()" id="btnSalvar" 
     [disabled]="((!nome.valid)||(!email.valid)||(!celular.valid))">

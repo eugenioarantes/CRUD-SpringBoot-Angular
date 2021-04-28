@@ -30,12 +30,22 @@ export class AtualizarEstadoComponent implements OnInit {
   }
 
   atualizarEstado(){
-    this.estadoService.atualizarEstado(this.id,this.estado).subscribe(data => {
+    this.estadoService.atualizarEstado(this.id,this.estado).subscribe(async data => {
+      this.messageService.add({severity:'success',
+          summary:'Estado Atualizado com sucesso!'});
+          await this.delay(2000);
       this.voltarMenuEstado();
     },
     error=>{
       this.messageService.add({severity:'error',
           summary:'Nome ou sigla já cadastrada!', detail:'Tente novamente!'});
+    });
+  }
+  private delay(ms: number): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
     });
   }
 }

@@ -30,8 +30,10 @@ export class CriarCidadeComponent implements OnInit {
   }
 
   salvarCidade(){
-    console.log(this.cidade);
-    this.cidadeService.criarCidade(this.cidade).subscribe(data => {
+    this.cidadeService.criarCidade(this.cidade).subscribe(async data => {
+      this.messageService.add({severity:'success',
+          summary:'Cidade cadastrada com sucesso!'});
+          await this.delay(2000);
         this.voltarMenuCidade();
     },
     error=>{
@@ -44,6 +46,14 @@ export class CriarCidadeComponent implements OnInit {
   private getEstados(){
     this.estadosService.getListaEstado().subscribe(data => {
       this.estados=data;
+    });
+  }
+
+  private delay(ms: number): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
     });
   }
 

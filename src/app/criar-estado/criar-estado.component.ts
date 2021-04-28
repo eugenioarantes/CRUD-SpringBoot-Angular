@@ -26,7 +26,10 @@ export class CriarEstadoComponent implements OnInit {
 
   salvarEstado(){
     
-    this.estadoService.criarEstado(this.estado).subscribe(data => {
+    this.estadoService.criarEstado(this.estado).subscribe(async data => {
+      this.messageService.add({severity:'success',
+          summary:'Estado cadastrado com sucesso!'});
+          await this.delay(2000);
         this.voltarMenuEstado();
     },
     error=>{
@@ -34,6 +37,13 @@ export class CriarEstadoComponent implements OnInit {
           summary:'Nome ou sigla já cadastrada!', detail:'Tente novamente!'});
     });
     
+  }
+  private delay(ms: number): Promise<boolean> {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, ms);
+    });
   }
 
 }

@@ -52,7 +52,6 @@ export class ListaPessoasComponent implements OnInit {
   private getPessoas(){
     this.pessoaService.getNomesPessoa().subscribe(data => {
       this.pessoas=data;
-      console.log(data);
     });
   }
 
